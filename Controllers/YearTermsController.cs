@@ -44,9 +44,9 @@ namespace DiplomaWebSite.Controllers
             int check =  yearTerm.term;
             
             if (check!=10 && check!=20 && check!= 30) {
-                 ModelState.AddModelError(string.Empty, "Unable to save dick.");
+                 ModelState.AddModelError(string.Empty, "Valid terms are 10, 20, and 30.");
             }
-            
+           
             if (ModelState.IsValid)
             {
                 
