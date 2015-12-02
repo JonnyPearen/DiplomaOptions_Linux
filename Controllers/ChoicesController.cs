@@ -206,12 +206,12 @@ namespace DiplomaWebSite.Controllers
         
        [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult GetChoices(int? yeartermid)
+        public ActionResult GetTable(int? yeartermid)
         {
-   if(yeartermid == null)
-            {
+             if(yeartermid == null)
+             {
                 yeartermid = _context.YearTerms.Where(y => y.isDefault == true).Select(yt => yt.YearTermId).FirstOrDefault();   
-            }
+             }
               
             var currentTerm = (from yt in _context.YearTerms
                                where yt.YearTermId == yeartermid
@@ -219,24 +219,24 @@ namespace DiplomaWebSite.Controllers
                                {
                                    Name = yt.year + " / " + yt.term
                                }).FirstOrDefault();
-           // ViewBag.currentTerm = currentTerm.Name;
+           
            ViewBag.currentTerm = "Selected Term: " + currentTerm.Name;
 
               var choices = _context
                     .Choices
                     .Where(c => c.YearTermId == yeartermid);
-           // ViewBag.Options = getOptionsData(yeartermid);
+           
 
      
 
-        return PartialView("_IndexPartial", choices);   
+           return PartialView("_TablePartial", choices);   
         }
         
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult GetChart(int? yeartermid)
         {
-   if(yeartermid == null)
+            if(yeartermid == null)
             {
                 yeartermid = _context.YearTerms.Where(y => y.isDefault == true).Select(yt => yt.YearTermId).FirstOrDefault();   
             }
@@ -248,7 +248,6 @@ namespace DiplomaWebSite.Controllers
                                    Name = yt.year + " / " + yt.term
                                }).FirstOrDefault();
                          
-           // ViewBag.currentTerm = currentTerm.Name;
            ViewBag.currentTerm = "Selected Term: " + currentTerm.Name;
              ViewBag.items = new string[]{ "datacom", "web and mobile", "tech pro", "Client Server"};
               var choices = _context

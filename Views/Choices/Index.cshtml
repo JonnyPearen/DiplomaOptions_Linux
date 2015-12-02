@@ -9,12 +9,12 @@
     <script type="text/javascript">
     
         $(document).ready(function () {
-         $("#dvChoiceResults").load('@(Url.Action("GetChoices","Choices",null, null))');
+         $("#dvChoiceResults").load('@(Url.Action("GetTable","Choices",null, null))');
          $("#dvChartPartial").load('@(Url.Action("GetChart","Choices",null, null))');
     });
     
     function OnChange(termId) {
-        $("#dvChoiceResults").load('@(Url.Action("GetChoices","Choices",null, null))?yeartermid=' + termId);
+        $("#dvChoiceResults").load('@(Url.Action("GetTable","Choices",null, null))?yeartermid=' + termId);
          $("#dvChartPartial").load('@(Url.Action("GetChart","Choices",null, null))?yeartermid=' + termId);
          
     }

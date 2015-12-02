@@ -8,12 +8,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using DiplomaWebSite.Models;
 using DiplomaWebSite.Services;
-//using testyo2.ViewModels.Manage;
 using DiplomaWebSite;
+using Microsoft.AspNet.Authorization;
 
 namespace DiplomaWebSite.Controllers
 {
-        //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class YearTermsController : Controller
     {
         private OptionsContext _context { get; set; }
@@ -33,7 +33,6 @@ namespace DiplomaWebSite.Controllers
 
         public ActionResult Create()
         {
-       //     ViewBag.Items = GetYearTermsListItems();
             return View();
         }
 
@@ -77,22 +76,6 @@ namespace DiplomaWebSite.Controllers
             }
             return View(yearTerm);
         }
-/*
-        private IEnumerable<SelectListItem> GetYearTermsListItems(int selected = -1)
-        {
-            var tmp = _context.YearTerms.ToList();
-
-            // Create authors list for <select> dropdown
-            return tmp
-                .OrderBy(s => s.title)
-                .Select(s => new SelectListItem
-                {
-                    Text = String.Format("{0}, {1}", s.YearTermId, s.title),
-                    Value = s.YearTermId.ToString(),
-                    Selected = s.YearTermId == selected
-                });
-        }
-    */
 
         public async Task<ActionResult> Edit(int id)
         {
@@ -102,8 +85,6 @@ namespace DiplomaWebSite.Controllers
                 Logger.LogInformation("Edit: Item not found {0}", id);
                 return HttpNotFound();
             }
-
-         //   ViewBag.Items = GetYearTermsListItems(YearTerm.YearTermId);
             return View(yearTerm);
         }
 
@@ -111,6 +92,7 @@ namespace DiplomaWebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, YearTerm yearTerm)
         {
+            yearTerm.YearTermId = id;
             try
             {
                 if (yearTerm.isDefault)
@@ -121,7 +103,7 @@ namespace DiplomaWebSite.Controllers
                         year.isDefault = false;
                     }
                 }
-                yearTerm.YearTermId = id;
+                
                 _context.YearTerms.Attach(yearTerm);
                 _context.Entry(yearTerm).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
